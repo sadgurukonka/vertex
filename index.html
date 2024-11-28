@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Entry Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        input, button {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Entry Form</h1>
+    <form id="dataEntryForm">
+        <label for="currentMonth">Current Month:</label>
+        <input type="text" id="currentMonth" name="currentMonth" required><br>
+
+        <label for="project">Project:</label>
+        <input type="text" id="project" name="project" required><br>
+
+        <label for="cluster">Cluster:</label>
+        <input type="text" id="cluster" name="cluster"><br>
+
+        <label for="jobType">Job Type:</label>
+        <input type="text" id="jobType" name="jobType"><br>
+
+        <label for="claimPercent">Claim %:</label>
+        <input type="text" id="claimPercent" name="claimPercent"><br>
+
+        <label for="invoiceAmount">Invoice Amount:</label>
+        <input type="text" id="invoiceAmount" name="invoiceAmount"><br>
+
+        <label for="invoiceDate">Invoice Date:</label>
+        <input type="date" id="invoiceDate" name="invoiceDate"><br>
+
+        <label for="paymentDueDate">Payment Due Date:</label>
+        <input type="date" id="paymentDueDate" name="paymentDueDate"><br>
+
+        <label for="dueDateCheck">Due Date on Check:</label>
+        <input type="date" id="dueDateCheck" name="dueDateCheck"><br>
+
+        <label for="accountStatus">Accounts Status:</label>
+        <input type="text" id="accountStatus" name="accountStatus"><br>
+
+        <label for="statusOfPayment">Status of Payment:</label>
+        <input type="text" id="statusOfPayment" name="statusOfPayment"><br>
+
+        <button type="button" onclick="submitData()">Submit</button>
+    </form>
+
+    <script>
+        const webAppUrl = "https://script.google.com/macros/s/AKfycbyBm0LCXrLojOLloRCqjyr3eFovp_g-aKRUDD55egXjlA0FqXMVAWPifMhFJykTseOq5A/exec"; // Replace with your Web App URL
+
+        function submitData() {
+            const form = document.getElementById("dataEntryForm");
+            const formData = new FormData(form);
+
+            const data = {
+                currentMonth: formData.get("currentMonth"),
+                project: formData.get("project"),
+                cluster: formData.get("cluster"),
+                jobType: formData.get("jobType"),
+                claimPercent: formData.get("claimPercent"),
+                invoiceAmount: formData.get("invoiceAmount"),
+                invoiceDate: formData.get("invoiceDate"),
+                paymentDueDate: formData.get("paymentDueDate"),
+                dueDateCheck: formData.get("dueDateCheck"),
+                accountStatus: formData.get("accountStatus"),
+                statusOfPayment: formData.get("statusOfPayment"),
+            };
+
+            fetch(webAppUrl, {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert("Data submitted successfully!");
+                form.reset();
+            })
+            .catch(error => {
+                alert("An error occurred: " + error);
+            });
+        }
+    </script>
+</body>
+</html>
